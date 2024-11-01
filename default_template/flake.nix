@@ -30,6 +30,8 @@
         nodejs18-pkgs.nodejs_18
         # bun@latest
         pkgs.bun
+        # python3.12@latest
+        pkgs.python312
       ];
 
       shellHook = ''

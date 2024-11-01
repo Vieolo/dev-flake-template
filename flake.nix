@@ -4,7 +4,8 @@
   outputs = { self }: {
 
     templates = {
-      default = {
+
+      default_template = {
         path = ./default_template;
         description = "Starting point for creating a flake for general packages";
       };
@@ -15,6 +16,7 @@
       };
     };
 
-    defaultTemplate = self.templates.default;
+    defaultTemplate = self.templates.default_template;
+
   };
 }
