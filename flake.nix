@@ -5,8 +5,8 @@
 
     templates = {
 
-      default_template = {
-        path = ./default_template;
+      general = {
+        path = ./general;
         description = "Starting point for creating a flake for general packages";
       };
       
@@ -16,7 +16,7 @@
       };
     };
 
-    defaultTemplate = self.templates.default_template;
+    defaultTemplate = self.templates.general;
 
   };
 }
