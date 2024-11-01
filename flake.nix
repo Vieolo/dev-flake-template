@@ -12,7 +12,7 @@
       frontend = {
         path = ./frontend;
         description = "Starting point for creating a flake for frontend development";
-      }
+      };
     };
 
     defaultTemplate = self.templates.trivial;
