@@ -15,6 +15,6 @@
       };
     };
 
-    defaultTemplate = self.templates.trivial;
+    defaultTemplate = self.templates.default;
   };
 }
