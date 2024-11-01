@@ -1,8 +1,13 @@
 {
 
   inputs = {
+    # Flake Utils
+    # Used to get the system
+    utils.url = "github:numtide/flake-utils";
+
     # The latest snapshot of packages
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
 
     # Pointing to a specific snapshot of the packages to get
     # specific version of packages
@@ -13,30 +18,30 @@
     # find the version, and then use the hash
   };
 
-  outputs = inputs:
-  let
-    # Defining variables before the body of outputs
-    # These packages are for `aarch64-darwin` which is M-series MacOS
+  outputs = inputs: inputs.utils.lib.eachDefaultSystem (system:
+    let
+      # Defining variables before the body of outputs
 
-    # Defining pkgs variable for convenience
-    pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
-    # Defining nodejs18-pkgs variable for convenience
-    nodejs18-pkgs = inputs.nodejs-18-nixpkgs.legacyPackages.aarch64-darwin;
-  in {
-    # Defining the shell for M-series MacOS
-    devShells.aarch64-darwin.default = pkgs.mkShell {
-      buildInputs = [
-        # nodejs@18
-        nodejs18-pkgs.nodejs_18
-        # bun@latest
-        pkgs.bun
-        # python3.12@latest
-        pkgs.python312
-      ];
+      # Defining pkgs variable for convenience
+      pkgs = inputs.nixpkgs.legacyPackages.${system};
+      # Defining nodejs18-pkgs variable for convenience
+      nodejs18-pkgs = inputs.nodejs-18-nixpkgs.legacyPackages.${system};
+    in {
+      # Defining the shell
+      devShell = pkgs.mkShell {
+        buildInputs = [
+          # nodejs@18
+          nodejs18-pkgs.nodejs_18
+          # bun@latest
+          pkgs.bun
+          # python3.12@latest
+          pkgs.python312
+        ];
 
-      shellHook = ''
-        export PS1='\[\e[2m\][\[\e[1m\]nix-shell\[\e[0;2m\]]\[\e[0m\] \[\e[38;5;220;1m\]\W\[\e[0m\] '
-      '';
-    };
-  };
+        shellHook = ''
+          export PS1='\[\e[2m\][\[\e[1m\]nix-shell\[\e[0;2m\]]\[\e[0m\] \[\e[38;5;220;1m\]\W\[\e[0m\] '
+        '';
+      };
+    }
+  );
 }
